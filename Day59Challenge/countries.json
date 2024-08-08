@@ -1,0 +1,213 @@
+[
+    {
+        "name": "France",
+        "capital": "Paris",
+        "official_languages": ["French"],
+        "population": 68373433,
+        "motto": "Liberté, égalité, fraternité"
+    },
+    {
+        "name": "Germany",
+        "capital": "Berlin",
+        "official_languages": ["German"],
+        "population": 83783942,
+        "motto": "Unity and Justice and Freedom"
+    },
+    {
+        "name": "Italy",
+        "capital": "Rome",
+        "official_languages": ["Italian"],
+        "population": 60244639,
+        "motto": "L'Italia e' una Repubblica democratica"
+    },
+    {
+        "name": "Spain",
+        "capital": "Madrid",
+        "official_languages": ["Spanish"],
+        "population": 47351567,
+        "motto": "Plus Ultra"
+    },
+    {
+        "name": "United Kingdom",
+        "capital": "London",
+        "official_languages": ["English"],
+        "population": 67886011,
+        "motto": "Dieu et mon droit"
+    },
+    {
+        "name": "Canada",
+        "capital": "Ottawa",
+        "official_languages": ["English", "French"],
+        "population": 38005238,
+        "motto": "A Mari Usque Ad Mare"
+    },
+    {
+        "name": "Australia",
+        "capital": "Canberra",
+        "official_languages": ["English"],
+        "population": 25687041,
+        "motto": "Advance Australia"
+    },
+    {
+        "name": "Japan",
+        "capital": "Tokyo",
+        "official_languages": ["Japanese"],
+        "population": 125836021,
+        "motto": "None"
+    },
+    {
+        "name": "China",
+        "capital": "Beijing",
+        "official_languages": ["Chinese"],
+        "population": 1444216107,
+        "motto": "None"
+    },
+    {
+        "name": "India",
+        "capital": "New Delhi",
+        "official_languages": ["Hindi", "English"],
+        "population": 1393409038,
+        "motto": "Satyameva Jayate"
+    },
+    {
+        "name": "Brazil",
+        "capital": "Brasília",
+        "official_languages": ["Portuguese"],
+        "population": 213993437,
+        "motto": "Ordem e Progresso"
+    },
+    {
+        "name": "Russia",
+        "capital": "Moscow",
+        "official_languages": ["Russian"],
+        "population": 145912025,
+        "motto": "None"
+    },
+    {
+        "name": "Mexico",
+        "capital": "Mexico City",
+        "official_languages": ["Spanish"],
+        "population": 126014024,
+        "motto": "Patria, Libertad, Trabajo y Cultura"
+    },
+    {
+        "name": "South Africa",
+        "capital": "Pretoria",
+        "official_languages": ["Afrikaans", "English", "Zulu", "Xhosa", "Swazi", "Sotho", "Southern Ndebele", "Tswana", "Venda", "Tsonga"],
+        "population": 60041996,
+        "motto": "ǃke e: ǀxarra ǁke"
+    },
+    {
+        "name": "Argentina",
+        "capital": "Buenos Aires",
+        "official_languages": ["Spanish"],
+        "population": 45605823,
+        "motto": "En unión y libertad"
+    },
+    {
+        "name": "Nigeria",
+        "capital": "Abuja",
+        "official_languages": ["English"],
+        "population": 206139589,
+        "motto": "Unity and Faith, Peace and Progress"
+    },
+    {
+        "name": "Egypt",
+        "capital": "Cairo",
+        "official_languages": ["Arabic"],
+        "population": 104258327,
+        "motto": "None"
+    },
+    {
+        "name": "Turkey",
+        "capital": "Ankara",
+        "official_languages": ["Turkish"],
+        "population": 84339067,
+        "motto": "None"
+    },
+    {
+        "name": "Saudi Arabia",
+        "capital": "Riyadh",
+        "official_languages": ["Arabic"],
+        "population": 34813871,
+        "motto": "There is no god but God; Muhammad is the messenger of God"
+    },
+    {
+        "name": "Indonesia",
+        "capital": "Jakarta",
+        "official_languages": ["Indonesian"],
+        "population": 273523621,
+        "motto": "Bhinneka Tunggal Ika"
+    },
+    {
+        "name": "Pakistan",
+        "capital": "Islamabad",
+        "official_languages": ["Urdu", "English"],
+        "population": 225199937,
+        "motto": "Faith, Unity, Discipline"
+    },
+    {
+        "name": "Bangladesh",
+        "capital": "Dhaka",
+        "official_languages": ["Bengali"],
+        "population": 166303498,
+        "motto": "None"
+    },
+    {
+        "name": "Vietnam",
+        "capital": "Hanoi",
+        "official_languages": ["Vietnamese"],
+        "population": 97338583,
+        "motto": "Independence - Freedom - Happiness"
+    },
+    {
+        "name": "Philippines",
+        "capital": "Manila",
+        "official_languages": ["Filipino", "English"],
+        "population": 113423120,
+        "motto": "Maka-Diyos, Maka-Tao, Makakalikasan at Makabansa"
+    },
+    {
+        "name": "Thailand",
+        "capital": "Bangkok",
+        "official_languages": ["Thai"],
+        "population": 69950834,
+        "motto": "None"
+    },
+    {
+        "name": "South Korea",
+        "capital": "Seoul",
+        "official_languages": ["Korean"],
+        "population": 51780579,
+        "motto": "Benefit broadly the human world"
+    },
+    {
+        "name": "Iran",
+        "capital": "Tehran",
+        "official_languages": ["Persian"],
+        "population": 85028773,
+        "motto": "None"
+    },
+    {
+        "name": "Colombia",
+        "capital": "Bogotá",
+        "official_languages": ["Spanish"],
+        "population": 51265865,
+        "motto": "Libertad y Orden"
+    },
+    {
+        "name": "Malaysia",
+        "capital": "Kuala Lumpur",
+        "official_languages": ["Malay"],
+        "population": 32776177,
+        "motto": "Bersekutu Bertambah Mutu"
+    },
+    {
+        "name": "Ethiopia",
+        "capital": "Addis Ababa",
+        "official_languages": ["Amharic"],
+        "population": 120812698,
+        "motto": "None"
+    }
+]
+
