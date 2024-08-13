@@ -8,92 +8,63 @@
 import SpriteKit
 import GameplayKit
 
-enum TargetSize: Int, CaseIterable {
-    case xs = 32
-    case s = 48
-    case m = 64
-    case l = 96
-    case xl = 128
-}
-
-func getTargetSpeed(with targetSize: TargetSize) -> Int {
-    switch targetSize {
-    case .xs:
-        return 10
-    case .s:
-        return 6
-    case .m:
-        return 3
-    case .l:
-        return 2
-    case .xl:
-        return 1
-    }
-}
-
-enum Row {
-    case top, mid, bottom
-}
-
-class Target {
-    let size: TargetSize
-    let velocity: CGVector
-    let sprite: SKSpriteNode
-    
-    init(row: Row) {
-        size = TargetSize.allCases.randomElement()!
-        
-        let speed = getTargetSpeed(with: size)
-        
-        let direction = row == .mid ? -1 : 1
-        
-        velocity = CGVector(dx: speed * direction, dy: 0)
-        
-        sprite = SKSpriteNode()
-    }
-}
-
 class GameScene: SKScene {
-    
-    let targets = [SKSpriteNode]()
-    
-    func getSpawnPosition(on row: Int, for targetSize: TargetSize) -> CGPoint {
-        let xOffset = row == 1 ? -5 : 5
-        let nRows = 3
-        
-        let rowHeight = size.height / CGFloat(nRows)
-        
-        let yOffset = 0
-        
-        let y = CGFloat(yOffset) + (rowHeight / CGFloat(2)) - CGFloat((targetSize.rawValue / 2))
-        let x = row == 1 ? size.width : 0
-        
-        return CGPoint(x: x + CGFloat(xOffset), y: y)
-    }
-
-    func getScore(from targetSize: TargetSize) -> Int {
-        switch targetSize {
-        case .xs:
-            return 10
-        case .s:
-            return 6
-        case .m:
-            return 3
-        case .l:
-            return 2
-        case .xl:
-            return 1
-        }
-    }
+    var spawnTimer: Timer?
+    var targets = [SKNode]()
     
     override func didMove(to view: SKView) {
-        let testTarget = SKSpriteNode(imageNamed: "target-good")
+//        let testTarget = SKSpriteNode(imageNamed: "target-good")
+//
+//        testTarget.size = CGSize(width: 32, height: 32)
+//
+//        testTarget.position = CGPoint(x: 200, y: 200)
+//
+//        addChild(testTarget)
         
-        testTarget.size = CGSize(width: 32, height: 32)
+        let firstSeparator = SKSpriteNode(color: .red, size: CGSize(width: size.width, height: 3))
+        let secondSeparator = SKSpriteNode(color: .red, size: CGSize(width: size.width, height: 3))
         
-        testTarget.position = CGPoint(x: 200, y: 200)
+        firstSeparator.position = CGPoint(x: size.width / 2, y: size.height * 0.33)
+        secondSeparator.position = CGPoint(x: size.width / 2, y: size.height * 0.66)
         
-        addChild(testTarget)
+        addChild(firstSeparator)
+        addChild(secondSeparator)
+        
+        spawnTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(spawnRandomTarget), userInfo: nil, repeats: true)
+    }
+    
+    func getSpeed(for targetSize: String) -> Int {
+        let dict = ["sm": 400, "md": 200, "lg": 100]
+        
+        return dict[targetSize]!
+    }
+    
+    @objc func spawnRandomTarget() {
+        let targetSize = ["sm", "md", "lg"].randomElement()!
+        let speed = getSpeed(for: targetSize)
+        let row = [1,2,3].randomElement()!
+        
+        let rowHeight = size.height / 3
+        
+        let direction = row == 2 ? -1 : 1
+        
+        let targetNode = SKSpriteNode(imageNamed: "target-good")
+        let widths = ["sm": 32, "md": 64, "lg": 128]
+        let w = widths[targetSize]!
+        targetNode.scale(to: CGSize(width: w, height: w))
+        
+        let y = rowHeight * CGFloat(row) - rowHeight / 2
+        let x = row == 2 ? size.width + 72 : -72
+        targetNode.position = CGPoint(x: x, y: y)
+        
+        targetNode.physicsBody = SKPhysicsBody()
+        targetNode.physicsBody?.velocity = CGVector(dx: speed * direction, dy: 0)
+        targetNode.physicsBody?.linearDamping = 0
+        targetNode.physicsBody?.affectedByGravity = false
+        
+        targetNode.name = "target-good"
+        targets.append(targetNode)
+        addChild(targetNode)
     }
     
     
@@ -124,11 +95,10 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-    }
-    
-    func spawn() {
-        let row = [0,1,2].randomElement()!
-        let targetSize = TargetSize.allCases.randomElement()!
-        let position = getSpawnPosition(on: row, for: targetSize)
+        for target in targets {
+            if target.position.x < -72 || target.position.x > size.width + 72 {
+                target.removeFromParent()
+            }
+        }
     }
 }
