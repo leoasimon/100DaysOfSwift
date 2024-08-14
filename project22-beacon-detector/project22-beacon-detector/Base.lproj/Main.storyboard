@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,15 +23,40 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aT2-Y3-2Tb">
+                                <rect key="frame" x="96" y="108" width="222" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <menu key="menu" id="Jsb-9Y-lMx">
+                                    <children>
+                                        <command title="Item 1" id="6vy-MM-xwg"/>
+                                        <command title="Item 2" id="k9G-uC-klu"/>
+                                    </children>
+                                </menu>
+                                <state key="normal" title="Select beacon distance"/>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="24G-5N-ngL">
+                                <rect key="frame" x="79" y="325" width="256" height="256"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="256" id="Oyl-fJ-Tf2"/>
+                                    <constraint firstAttribute="width" constant="256" id="jU6-vR-rUX"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="aT2-Y3-2Tb" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="2t6-3j-hWV"/>
+                            <constraint firstItem="aT2-Y3-2Tb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="64" id="PBc-FU-ib4"/>
+                            <constraint firstItem="24G-5N-ngL" firstAttribute="centerY" secondItem="ygH-Po-bEU" secondAttribute="centerY" id="eB4-TF-YA1"/>
                             <constraint firstItem="ygH-Po-bEU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ekj-bn-vsf"/>
+                            <constraint firstItem="24G-5N-ngL" firstAttribute="centerX" secondItem="ygH-Po-bEU" secondAttribute="centerX" id="otb-8o-veO"/>
                             <constraint firstItem="ygH-Po-bEU" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="rUp-5G-zr7"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="beaonDistanceSelect" destination="aT2-Y3-2Tb" id="DRk-WU-ykT"/>
+                        <outlet property="distanceIndicator" destination="24G-5N-ngL" id="2g9-zV-eEn"/>
                         <outlet property="distanceReading" destination="ygH-Po-bEU" id="tNT-s2-sGq"/>
                     </connections>
                 </viewController>
