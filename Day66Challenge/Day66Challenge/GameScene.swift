@@ -13,14 +13,6 @@ class GameScene: SKScene {
     var targets = [SKNode]()
     
     override func didMove(to view: SKView) {
-//        let testTarget = SKSpriteNode(imageNamed: "target-good")
-//
-//        testTarget.size = CGSize(width: 32, height: 32)
-//
-//        testTarget.position = CGPoint(x: 200, y: 200)
-//
-//        addChild(testTarget)
-        
         let firstSeparator = SKSpriteNode(color: .red, size: CGSize(width: size.width, height: 3))
         let secondSeparator = SKSpriteNode(color: .red, size: CGSize(width: size.width, height: 3))
         
@@ -34,7 +26,7 @@ class GameScene: SKScene {
     }
     
     func getSpeed(for targetSize: String) -> Int {
-        let dict = ["sm": 400, "md": 200, "lg": 100]
+        let dict = ["sm": 400, "md": 270, "lg": 150]
         
         return dict[targetSize]!
     }
@@ -69,6 +61,13 @@ class GameScene: SKScene {
     
     
     func touchDown(atPoint pos : CGPoint) {
+        let nodes = self.nodes(at: pos)
+        
+        for node in nodes {
+            if (node.name ?? "").starts(with: "target") {
+                print("Touched a target with name: \(node.name)")
+            }
+        }
     }
     
     func touchMoved(toPoint pos : CGPoint) {
