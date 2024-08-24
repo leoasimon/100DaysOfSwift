@@ -46,6 +46,22 @@ class GameScene: SKScene {
     
     var isGameEnded = false
     
+    var gameOverNode = SKSpriteNode()
+
+    
+    static let chainDelayDenominator = 5.0
+    static let fastChainDelayDenominator = 10.0
+    
+    static let enemySpawnY = -128
+    static let enemySpawnXRange = 64...960
+    static let spinSpeedRange: ClosedRange<CGFloat> = -3...3
+    static let sideEnemyAbsVelocityRange = 8...15
+    static let midEnemyAbsVelocityRange = 3...5
+    static let enemyYspeedRange = 24...32
+    static let enemySpeedMultiplicator = 40
+    static let specialEnemySpeedMultiplicator = 48
+    static let enemyColliderRadius: CGFloat = 64
+    
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "sliceBackground")
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
@@ -74,6 +90,12 @@ class GameScene: SKScene {
         }
     }
     
+    func createGameOver() {
+        gameOverNode = SKSpriteNode(color: .white, size: CGSize(width: 320, height: 320))
+        
+        addChild(gameOverNode)
+    }
+    
     func createScore() {
         gameScore = SKLabelNode(fontNamed: "Chalkduster")
         gameScore.horizontalAlignmentMode = .left
@@ -87,10 +109,16 @@ class GameScene: SKScene {
     func createLives() {
         for i in 0 ..< 3 {
             let spriteNode = SKSpriteNode(imageNamed: "sliceLife")
-            spriteNode.position = CGPoint(x: CGFloat(834 + (i * 70)), y: 720)
+            spriteNode.position = CGPoint(x: CGFloat(834 + (i * 70)), y: 620)
             addChild(spriteNode)
             
             livesImages.append(spriteNode)
+        }
+    }
+    
+    func tossSpecial() {
+        if Int.random(in: 0...10) == 0 {
+            createEnemy(forceBomb: .never, isSpecial: true)
         }
     }
     
@@ -105,28 +133,34 @@ class GameScene: SKScene {
         switch sequenceType {
         case .oneNoBomb:
             createEnemy(forceBomb: .never)
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0)) { [weak self] in self?.tossSpecial() }
             
         case .one:
             createEnemy()
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0)) { [weak self] in self?.tossSpecial() }
             
         case .twoWithOneBomb:
             createEnemy(forceBomb: .never)
             createEnemy(forceBomb: .always)
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0)) { [weak self] in self?.tossSpecial() }
             
         case .two:
             createEnemy()
             createEnemy()
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0)) { [weak self] in self?.tossSpecial() }
             
         case .three:
             createEnemy()
             createEnemy()
             createEnemy()
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0)) { [weak self] in self?.tossSpecial() }
             
         case .four:
             createEnemy()
             createEnemy()
             createEnemy()
             createEnemy()
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0)) { [weak self] in self?.tossSpecial() }
             
         case .chain:
             createEnemy()
@@ -135,6 +169,7 @@ class GameScene: SKScene {
             DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 2)) { [weak self] in self?.createEnemy() }
             DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 3)) { [weak self] in self?.createEnemy() }
             DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 4)) { [weak self] in self?.createEnemy() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 5)) { [weak self] in self?.tossSpecial() }
             
         case .fastChain:
             createEnemy()
@@ -143,13 +178,14 @@ class GameScene: SKScene {
             DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 2)) { [weak self] in self?.createEnemy() }
             DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 3)) { [weak self] in self?.createEnemy() }
             DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 4)) { [weak self] in self?.createEnemy() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 5)) { [weak self] in self?.tossSpecial() }
         }
         
         sequencePosition += 1
         nextSequenceQueued = false
     }
     
-    func createEnemy(forceBomb: ForceBomb = .random) {
+    func createEnemy(forceBomb: ForceBomb = .random, isSpecial: Bool = false) {
         let enemy: SKSpriteNode
         
         var enemyType = Int.random(in: 0...6)
@@ -196,39 +232,44 @@ class GameScene: SKScene {
             enemy.name = "enemy"
         }
         
-        // position code goes here
+        if isSpecial {
+            enemy.name = "special-enemy"
+            enemy.colorBlendFactor = 0.7
+            enemy.color = .systemPink
+        }
         
         // 1 - Give the enemy a random position off the bottom edge of the screen.
-        let x = Int.random(in: 64...960)
-        let y = Int(-128)
-        let randomPosition = CGPoint(x: x, y: y)
+        let x = Int.random(in: GameScene.enemySpawnXRange)
+        let randomPosition = CGPoint(x: x, y: GameScene.enemySpawnY)
         enemy.position = randomPosition
         
         // 2 - Create a random angular velocity, which is how fast something should spin.
-        let spinSpeed = CGFloat.random(in: -3...3)
+        let spinSpeed = CGFloat.random(in: GameScene.spinSpeedRange)
         
         // 3 - Create a random X velocity (how far to move horizontally) that takes into account the enemy's position.
         var randomXVelocity = 0
         if randomPosition.x < 256 {
-            randomXVelocity = Int.random(in: 8...15)
+            randomXVelocity = Int.random(in: GameScene.sideEnemyAbsVelocityRange)
         } else if randomPosition.x < 512 {
-            randomXVelocity = Int.random(in: 3...5)
+            randomXVelocity = Int.random(in: GameScene.midEnemyAbsVelocityRange)
         } else if randomPosition.x < 768 {
-            randomXVelocity = -Int.random(in: 3...5)
+            randomXVelocity = -Int.random(in: GameScene.midEnemyAbsVelocityRange)
         } else {
-            randomXVelocity = -Int.random(in: 8...15)
+            randomXVelocity = -Int.random(in: GameScene.sideEnemyAbsVelocityRange)
         }
         
         // 4 - Create a random Y velocity just to make things fly at different speeds.
-        let ySpeed = Int.random(in: 24...32)
+        let ySpeed = Int.random(in: GameScene.enemyYspeedRange)
         
         // 5 - Give all enemies a circular physics body where the collisionBitMask is set to 0 so they don't collide.
-        enemy.physicsBody = SKPhysicsBody(circleOfRadius: 64)
+        enemy.physicsBody = SKPhysicsBody(circleOfRadius: GameScene.enemyColliderRadius)
         enemy.physicsBody?.collisionBitMask = 0
         
-        enemy.physicsBody?.angularVelocity = spinSpeed
-        enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: ySpeed * 40)
+        let spinSpeedMulitplicator: CGFloat = isSpecial ? 2 : 1
+        let velSpeedMultiplicator = isSpecial ? GameScene.specialEnemySpeedMultiplicator : GameScene.enemySpeedMultiplicator
         
+        enemy.physicsBody?.angularVelocity = spinSpeed * spinSpeedMulitplicator
+        enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * velSpeedMultiplicator, dy: ySpeed * velSpeedMultiplicator)
         addChild(enemy)
         activeEnemies.append(enemy)
     }
@@ -314,7 +355,6 @@ class GameScene: SKScene {
         
         activeSliceBG.alpha = 1
         activeSliceFG.alpha = 1
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -332,7 +372,7 @@ class GameScene: SKScene {
         let nodesAtPoint = nodes(at: position)
 
         for case let node as SKSpriteNode in nodesAtPoint {
-            if node.name == "enemy" {
+            if node.name == "enemy" || node.name == "special-enemy" {
                 // destroy penguin
                 // 1
                 if let emitter = SKEmitterNode(fileNamed: "sliceHitEnemy") {
