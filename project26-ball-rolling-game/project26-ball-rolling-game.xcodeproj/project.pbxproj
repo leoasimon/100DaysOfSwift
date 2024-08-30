@@ -21,6 +21,9 @@
 		B3A7F6122C7DFFF600FD8306 /* block@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B3A7F60B2C7DFFF600FD8306 /* block@2x.png */; };
 		B3A7F6132C7DFFF600FD8306 /* vortex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B3A7F60C2C7DFFF600FD8306 /* vortex@2x.png */; };
 		B3A7F6142C7DFFF600FD8306 /* player@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B3A7F60D2C7DFFF600FD8306 /* player@2x.png */; };
+		B3D7C39D2C80C509006EDCBD /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = B3D7C39C2C80C509006EDCBD /* level2.txt */; };
+		B3D7C39F2C80C9D2006EDCBD /* level3.txt in Resources */ = {isa = PBXBuildFile; fileRef = B3D7C39E2C80C9D2006EDCBD /* level3.txt */; };
+		B3D7C3A12C80D418006EDCBD /* level4.txt in Resources */ = {isa = PBXBuildFile; fileRef = B3D7C3A02C80D418006EDCBD /* level4.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +42,9 @@
 		B3A7F60B2C7DFFF600FD8306 /* block@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "block@2x.png"; sourceTree = "<group>"; };
 		B3A7F60C2C7DFFF600FD8306 /* vortex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vortex@2x.png"; sourceTree = "<group>"; };
 		B3A7F60D2C7DFFF600FD8306 /* player@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player@2x.png"; sourceTree = "<group>"; };
+		B3D7C39C2C80C509006EDCBD /* level2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
+		B3D7C39E2C80C9D2006EDCBD /* level3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level3.txt; sourceTree = "<group>"; };
+		B3D7C3A02C80D418006EDCBD /* level4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level4.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +88,12 @@
 				B3A7F60B2C7DFFF600FD8306 /* block@2x.png */,
 				B3A7F6082C7DFFF600FD8306 /* finish@2x.png */,
 				B3A7F60A2C7DFFF600FD8306 /* level1.txt */,
+				B3D7C39E2C80C9D2006EDCBD /* level3.txt */,
 				B3A7F60D2C7DFFF600FD8306 /* player@2x.png */,
 				B3A7F6092C7DFFF600FD8306 /* star@2x.png */,
 				B3A7F60C2C7DFFF600FD8306 /* vortex@2x.png */,
+				B3D7C39C2C80C509006EDCBD /* level2.txt */,
+				B3D7C3A02C80D418006EDCBD /* level4.txt */,
 			);
 			path = "project26-ball-rolling-game";
 			sourceTree = "<group>";
@@ -148,9 +157,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3A7F6132C7DFFF600FD8306 /* vortex@2x.png in Resources */,
+				B3D7C39F2C80C9D2006EDCBD /* level3.txt in Resources */,
 				B3A7F5FC2C7DFF4300FD8306 /* Main.storyboard in Resources */,
+				B3D7C39D2C80C509006EDCBD /* level2.txt in Resources */,
 				B3A7F5F32C7DFF4300FD8306 /* GameScene.sks in Resources */,
 				B3A7F6102C7DFFF600FD8306 /* star@2x.png in Resources */,
+				B3D7C3A12C80D418006EDCBD /* level4.txt in Resources */,
 				B3A7F6112C7DFFF600FD8306 /* level1.txt in Resources */,
 				B3A7F60F2C7DFFF600FD8306 /* finish@2x.png in Resources */,
 				B3A7F5FE2C7DFF4400FD8306 /* Assets.xcassets in Resources */,
