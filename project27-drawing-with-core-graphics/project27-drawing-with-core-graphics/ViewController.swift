@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     @IBAction func redrawTapped(_ sender: Any) {
         drawingType += 1
         
-        if drawingType > 5 {
+        if drawingType > 7 {
             drawingType = 0
         }
         
@@ -40,6 +40,10 @@ class ViewController: UIViewController {
             drawLines()
         case 5:
             drawImageAndText()
+        case 6:
+            drawStar()
+        case 7:
+            drawTwin()
         default:
             break
         }
@@ -171,6 +175,64 @@ class ViewController: UIViewController {
         }
         
         // Update the image view with the finished result.
+        imageView.image = img
+    }
+    
+    func drawStar() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        
+        let img = renderer.image { ctx in
+            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
+            ctx.cgContext.setLineWidth(3)
+            ctx.cgContext.setFillColor(UIColor.yellow.cgColor)
+            
+            ctx.cgContext.translateBy(x: 256, y: 256)
+            
+            let rotation = Double.pi / 5
+            
+            ctx.cgContext.move(to: CGPoint(x: 0, y: -200))
+            for i in 0..<10 {
+                ctx.cgContext.rotate(by: rotation)
+                if i == 0 || i % 2 == 0 {
+                    ctx.cgContext.addLine(to: CGPoint(x: 0, y: -64))
+                } else {
+                    ctx.cgContext.addLine(to: CGPoint(x: 0, y: -200))
+                }
+            }
+            ctx.cgContext.drawPath(using: .fillStroke)
+        }
+    
+        imageView.image = img
+    }
+    
+    func drawTwin() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        
+        let img = renderer.image { ctx in
+            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
+            
+            ctx.cgContext.move(to: CGPoint(x: 32, y: 124))
+            ctx.cgContext.addLine(to: CGPoint(x: 128, y: 124))
+            ctx.cgContext.move(to: CGPoint(x: 80, y: 124))
+            ctx.cgContext.addLine(to: CGPoint(x: 80, y: 384))
+            
+            ctx.cgContext.move(to: CGPoint(x: 160, y: 124))
+            ctx.cgContext.addLine(to: CGPoint(x: 184, y: 384))
+            ctx.cgContext.addLine(to: CGPoint(x: 208, y: 254))
+            ctx.cgContext.addLine(to: CGPoint(x: 232, y: 384))
+            ctx.cgContext.addLine(to: CGPoint(x: 256, y: 124))
+            
+            ctx.cgContext.move(to: CGPoint(x: 288, y: 124))
+            ctx.cgContext.addLine(to: CGPoint(x: 288, y: 384))
+            
+            ctx.cgContext.move(to: CGPoint(x: 320, y: 384))
+            ctx.cgContext.addLine(to: CGPoint(x: 320, y: 124))
+            ctx.cgContext.addLine(to: CGPoint(x: 448, y: 384))
+            ctx.cgContext.addLine(to: CGPoint(x: 448, y: 124))
+            
+            ctx.cgContext.drawPath(using: .stroke)
+        }
+        
         imageView.image = img
     }
 }
