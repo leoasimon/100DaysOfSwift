@@ -28,10 +28,11 @@ class ViewController: UIViewController {
         var error: NSError?
         
         guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-            let ac = UIAlertController(title: "Authentication Error", message: error?.localizedDescription, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
+//            let ac = UIAlertController(title: "Authentication Error", message: error?.localizedDescription, preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
 
+            authWithPwd()
             return
         }
 
@@ -49,9 +50,46 @@ class ViewController: UIViewController {
         }
     }
     
+    private func authWithPwd() {
+        if let pwd = KeychainWrapper.standard.string(forKey: "Password") {
+            let ac = UIAlertController(title: "Password", message: "type your password to authenticate", preferredStyle: .alert)
+            ac.addTextField()
+            ac.addAction(UIAlertAction(title: "Authenticate", style: .default, handler: {
+                [weak self] _ in
+                let userPwd = ac.textFields?[0].text ?? ""
+                guard userPwd == pwd else {
+                    let ac = UIAlertController(title: "Authentication Error", message: "Incorrect password", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+                    self?.present(ac, animated: true)
+                    
+                    return
+                }
+                
+                self?.unlockSecretMessage()
+            }))
+            
+            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Password", message: "Create your password", preferredStyle: .alert)
+            ac.addTextField()
+            ac.addAction(UIAlertAction(title: "Set password", style: .default, handler: {
+                [weak self] _ in
+                let userPwd = ac.textFields?[0].text ?? ""
+                KeychainWrapper.standard.set(userPwd, forKey: "Password")
+                self?.authWithPwd()
+            }))
+            
+            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(ac, animated: true)
+        }
+    }
+    
     private func unlockSecretMessage() {
         secret.isHidden = false
         title = "Secret stuff"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(saveSecretMessage))
         
         if let text = KeychainWrapper.standard.string(forKey: "SecretMessage") {
             secret.text = text
@@ -64,6 +102,7 @@ class ViewController: UIViewController {
         KeychainWrapper.standard.set(secret.text, forKey: "SecretMessage")
         secret.resignFirstResponder()
         secret.isHidden = true
+        navigationItem.rightBarButtonItem = nil
         title = "Nothing to see here"
     }
     
