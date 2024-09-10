@@ -76,10 +76,9 @@ class BuildingNode: SKSpriteNode {
         
         //        Create a new Core Graphics context the size of our current sprite.
         let renderer = UIGraphicsImageRenderer(size: self.size)
-        let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
         
         let img = renderer.image {
-            [weak self] ctx in
+            ctx in
             //        Draw our current building image into the context. This will be the full building to begin with, but it will change when hit.
             currentImage.draw(at: .zero)
             

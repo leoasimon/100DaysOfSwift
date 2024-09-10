@@ -23,6 +23,8 @@ class GameScene: SKScene {
     var currentPlayer = 1
     var banana: SKSpriteNode!
     
+    var throwIndicator: SKSpriteNode!
+    
     weak var viewController: GameViewController!
     
     override func didMove(to view: SKView) {
@@ -31,6 +33,7 @@ class GameScene: SKScene {
         
         createBuildings()
         createPlayers()
+        createThrowIndicator()
     }
     
     private func createBuildings() {
@@ -84,12 +87,37 @@ class GameScene: SKScene {
         //        Add the player to the scene.
         addChild(player1)
         addChild(player2)
-        
-        //        Repeat all the above for player 2, except they should be on the second to last building.
     }
     
-    func launch(angle: Int, velocity: Int) {
+    private func createThrowIndicator() {
+        throwIndicator = SKSpriteNode(color: .red, size: CGSize(width: 64, height: 6))
+        throwIndicator.anchorPoint = CGPoint(x: 0, y: throwIndicator.anchorPoint.y)
         
+        
+        if currentPlayer == 2 {
+            throwIndicator.position = CGPoint(x: player2.position.x + 24, y: player2.position.y + 32)
+            throwIndicator.zRotation = .pi * 3 / 4
+        } else {
+            throwIndicator.zRotation = .pi / 4
+            throwIndicator.position = CGPoint(x: player1.position.x - 24, y: player1.position.y + 32)
+        }
+        
+        addChild(throwIndicator)
+    }
+    
+    func updateThrowIndicator(angle: Int, velocity: Int) {
+        throwIndicator.size.width = CGFloat(velocity)
+        
+        if currentPlayer == 2 {
+            throwIndicator.zRotation = CGFloat(180 - angle) * .pi / 180
+        } else {
+            throwIndicator.zRotation = CGFloat(angle) * .pi / 180
+        }
+    }
+    
+    
+    func launch(angle: Int, velocity: Int) {
+        throwIndicator.isHidden = true
         //        Figure out how hard to throw the banana. We accept a velocity parameter, but I'll be dividing that by 10. You can adjust this based on your own play testing.
         let speed = Double(velocity) / 10
         
@@ -177,9 +205,14 @@ class GameScene: SKScene {
     }
     
     func changePlayer() {
+        throwIndicator.isHidden = false
         if currentPlayer == 1 {
+            throwIndicator.position = CGPoint(x: player2.position.x + 24, y: player2.position.y + 32)
+            throwIndicator.zRotation = .pi - throwIndicator.zRotation
             currentPlayer = 2
         } else {
+            throwIndicator.position = CGPoint(x: player1.position.x - 24, y: player1.position.y + 32)
+            throwIndicator.zRotation = .pi - throwIndicator.zRotation
             currentPlayer = 1
         }
         

@@ -45,8 +45,8 @@ class GameViewController: UIViewController {
             view.showsNodeCount = true
         }
         
-        angleChanged(angleSlider)
-        velocityChanged(velocitySlider)
+        angleChanged(angleSlider!)
+        velocityChanged(velocitySlider!)
     }
 
     override var shouldAutorotate: Bool {
@@ -67,10 +67,12 @@ class GameViewController: UIViewController {
     
     @IBAction func angleChanged(_ sender: Any) {
         angleLabel.text = "Angle: \(Int(angleSlider.value))°"
+        currentGame.updateThrowIndicator(angle: Int(angleSlider.value), velocity: Int(velocitySlider.value))
     }
     
     @IBAction func velocityChanged(_ sender: Any) {
         velocityLabel.text = "Velocity: \(Int(velocitySlider.value))"
+        currentGame.updateThrowIndicator(angle: Int(angleSlider.value), velocity: Int(velocitySlider.value))
     }
     
     @IBAction func launch(_ sender: Any) {
